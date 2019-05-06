@@ -102,7 +102,7 @@ def main():
     client = IndyPerfWSClient()
     # "wss://indyperf-ws-testa.7e14.starter-us-west-2.openshiftapps.com/ws"
     client.connect(
-        os.getenv('INDYPERF_WS_SERVER', 'localhost')
+        os.getenv('INDYPERF_WS_SERVER', 'ws://localhost:8888/ws')
     )
 
     try:
