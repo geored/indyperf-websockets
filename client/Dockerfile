@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.6-slim
 WORKDIR /opt/app
 ADD . .
 RUN	pip install -r requirements.txt
