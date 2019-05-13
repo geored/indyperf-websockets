@@ -37,6 +37,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     @classmethod
     def heartbeat(cls):
         logging.warning("--- Hearth Bit ---")
+        logging.warning("--- SESSIONS: {}".format(cls.SESSIONS))
         return "ok"
 
     def check_origin(self, origin):
@@ -47,16 +48,17 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 class MainHandler(tornado.web.RequestHandler):
 
     def get(self, *args, **kwargs):
-        self.write({'status':'ok'})
+        self.render("index.html",title="Login NOS-PERF")
+        # self.write({'status':'ok'})
 
     def post(self, *args, **kwargs):
         headers = {x: self.request.headers[x] for x in self.request.headers}
         payload = self.request.body
         data = {
-            'id': str(uuid.uuid4()),
-            'headers': headers,
-            'timestamp': str(int(time.time() * 1000)),
-            'payload': payload.decode('utf-8')
+            "id": str(uuid.uuid4()),
+            "headers": headers,
+            "timestamp": str(int(time.time() * 1000)),
+            "payload": payload.decode('utf-8')
         }
         WSHandler.broadcast(data)
         self.write(json.dumps({
